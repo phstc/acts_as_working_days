@@ -31,6 +31,21 @@ class ActsAsWorkingDaysTest < Test::Unit::TestCase
     assert_equal 45, working_day.end_min
   end
   
+  def test_put_updating_a_working_day
+    moes_tavern = Company.new(:name => 'Moes Tavern')
+    working_day = moes_tavern.put_working_day(:week_day => 0, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
+    moes_tavern.save
+    #Updating working day
+    moes_tavern.put_working_day(:week_day => 0, :start_hour => 10, :start_min => 13, :end_hour => 19, :end_min => 23)
+    moes_tavern.save
+    working_day = moes_tavern.working_days.first
+    assert_equal 0, working_day.week_day
+    assert_equal 10, working_day.start_hour
+    assert_equal 13, working_day.start_min
+    assert_equal 19, working_day.end_hour
+    assert_equal 23, working_day.end_min
+  end
+  
   def test_true_working_day
     moes_tavern = Company.new(:name => 'Moes Tavern')
     moes_tavern.put_working_day(:week_day => 0, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
