@@ -12,16 +12,24 @@ acts_as_working_days is a Rails plugin to add working days on models
  
  #Sample test code 
  def test_working_day
+
    kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
+
    #1 is Monday - Apu Kwik-E-Mart is only opened on Mondays, start 8h30, end 18h45
    kwik_e_mart.put_working_day(:week_day => 1, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
+
+   #Save model and working day
    kwik_e_mart.save
+
    #0 is Sunday - 12h45 is closed 
    assert_equal false, kwik_e_mart.working_day?(:week_day => 0, :hour => 12, :min => 0)
+
    #1 is Monday - 21h00 is closed 
    assert_equal false, kwik_e_mart.working_day?(:week_day => 1, :hour => 21)
+
    #1 is Monday - 12h15 is opened 
    assert_equal true, kwik_e_mart.working_day?(:week_day => 1, :hour => 12, :min => 15)
+
  end
   
 
@@ -57,6 +65,6 @@ To use it, add it to your Gemfile:
 
 Inside the plugin directory, you can run the tests with:
 
- rake
+ rake test
 
 Copyright (c) 2010 Pablo Cantero, released under the MIT license

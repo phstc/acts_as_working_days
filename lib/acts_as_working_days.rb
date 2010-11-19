@@ -18,7 +18,7 @@ module ActsAsWorkingDays
       where = 'week_day = :week_day AND ((start_hour < :hour) OR (start_hour = :hour AND start_min <= :min)) AND ((end_hour > :hour) OR (end_hour = :hour AND end_min <= :min))'
       params = {:week_day => params[:week_day], :hour => params[:hour], :min => params[:min]}
       #To prevent @Depecrate
-      if working_days.responde_to?('where')
+      if working_days.respond_to?('where')
         #Rails 3 style
         result = working_days.where(where, params)
       else
