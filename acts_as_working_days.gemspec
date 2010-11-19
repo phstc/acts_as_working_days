@@ -14,7 +14,7 @@ PKG_FILES = FileList[
  
 spec = Gem::Specification.new do |s|
   s.name = "acts_as_working_days"
-  s.version = "0.0.1"
+  s.version = "0.0.3"
   s.author = "Pablo Cantero"
   s.email = "pablo@pablocantero.com"
   s.homepage = "http://pablocantero.com/"
