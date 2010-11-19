@@ -1,0 +1,23 @@
+sqlite:
+  :adapter: sqlite
+  #TODO Não é dbfile como no guide
+  :database: vendor/plugins/acts_as_working_days/test/acts_as_working_days_plugin.sqlite.db
+ 
+sqlite3:
+  :adapter: sqlite3
+  #TODO Não é dbfile como no guide
+  :database: vendor/plugins/acts_as_working_days/test/acts_as_working_days_plugin.sqlite3.db
+ 
+postgresql:
+  :adapter: postgresql
+  :username: postgres
+  :password: postgres
+  :database: acts_as_working_days_test
+  :min_messages: ERROR
+ 
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: root
+  :password: password
+  :database: acts_as_working_days_test
