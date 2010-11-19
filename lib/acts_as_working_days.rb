@@ -14,13 +14,18 @@ module ActsAsWorkingDays
  
   module InstanceMethods
     def working_day?(params ={:week_day => Time.now.wday, :hour => Time.now.hour, :min => Time.now.min })
-      result = working_days.where("week_day = :week_day AND ((start_hour < :hour) OR (start_hour = :hour AND start_min <= :min)) AND ((end_hour > :hour) OR (end_hour = :hour AND end_min <= :min))", 
-        {
-          :week_day => params[:week_day], 
-          :hour => params[:hour], 
-          :min => params[:min]
-        })
-      !result.empty?
+      result = nil
+      where = 'week_day = :week_day AND ((start_hour < :hour) OR (start_hour = :hour AND start_min <= :min)) AND ((end_hour > :hour) OR (end_hour = :hour AND end_min <= :min))'
+      params = {:week_day => params[:week_day], :hour => params[:hour], :min => params[:min]}
+      #To prevent @Depecrate
+      if working_days.responde_to?('where')
+        #Rails 3 style
+        result = working_days.where(where, params)
+      else
+        #Rails 2x style
+        result = working_days.find(:all, :conditions => [where, params])
+      end
+      return !result.empty?
     end
     
     def put_working_day(params = {:week_day => Time.now.wday, :start_hour => 0, :start_min => 0, :end_hour => 23, :end_min => 59})
