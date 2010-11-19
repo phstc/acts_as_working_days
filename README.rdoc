@@ -1,13 +1,21 @@
-ActsAsWorkingDays
+= ActsAsWorkingDays
 ================
 
 Introduction goes here.
 
+== Installation
 
-Example
-=======
+=== Rails 2.3.x
 
-Example goes here.
+Acts As Working Days On is tested to work in Rails 2.3.5. 
 
+==== Plugin
+
+  script/plugin install git://github.com/phstc/acts_as_working_days
+
+==== Post Installation
+
+1. script/generate acts_as_working_days_migration
+2. rake db:migrate
 
 Copyright (c) 2010 Pablo Cantero, released under the MIT license
