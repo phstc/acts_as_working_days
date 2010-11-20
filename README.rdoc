@@ -4,36 +4,56 @@ acts_as_working_days is a Rails plugin to add working days on models
 
 == Usage
 
- #app/models/company.rb
+=== Adding acts_as_working_days
+
+ # app/models/company.rb
  class Company < ActiveRecord::Base
  
    acts_as_working_days
  
  end
 
- #Sample test code 
- def test_working_day
+=== Detecting working day
+
+ kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
  
-  kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
+ # Verifies if kwik_e_mart is opened now (Time.now)
+ kwik_e_mart.working_day? 
+ 
+ # Verifies if kwik_e_mart is opened on Sundays
+ kwik_e_mart.working_day?(:week_day => 0)
+ 
+ # Verifies if kwik_e_mart is opened on Mondays 21h30
+ kwik_e_mart.working_day?(:week_day => 1, :hour => 21, :min => 30)
 
-  #1 is Monday, Apu Kwik-E-Mart is only opened on Mondays from 8h30 till 18h45
-  kwik_e_mart.working_days.build(:week_day => 1, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
+week_day is an integer representing the day of the week, 0..6, with Sunday == 0
+(See http://www.ruby-doc.org/core/classes/Time.html#M000285)
 
-  #Save model and working day
-  kwik_e_mart.save
+=== Setting working day
 
-  #0 = Sunday, 12h45 is closed 
-  assert_equal false, kwik_e_mart.working_day?(:week_day => 0, :hour => 12, :min => 0)
+ kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
 
-  #1 = Monday, 21h00 is closed 
-  assert_equal false, kwik_e_mart.working_day?(:week_day => 1, :hour => 21)
+ # Set kwik_e_mart is opened on Mondays from 8h30 to 18h45
+ kwik_e_mart.working_days.build(:week_day => 1, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
 
-  #1 = Monday, 12h15 is opened 
-  assert_equal true, kwik_e_mart.working_day?(:week_day => 1, :hour => 12, :min => 15)
+ # Set kwik_e_mart is opened on Saturdays from 10h00 to 16h00
+ kwik_e_mart.working_days.build(:week_day => 6, :start_hour => 10, :start_min => 0, :end_hour => 16, :end_min => 0)
+ 
+ # retuns true
+ kwik_e_mart.working_day?(:week_day => 1)
 
- end
+ # returns true
+ kwik_e_mart.working_day?(:week_day => 1, :hour => 18)
 
- #app/views/company/new.html.erb
+ # return true
+ kwik_e_mart.working_day?(:week_day => 1, :hour => 12, :min => 30)
+
+ # return false
+ kwik_e_mart.working_day?(:week_day => 1, :hour => 21, :min => 30)
+
+=== Creating html form to set the working days
+
+ # app/views/company/new.html.erb
  <% form_for @company do |f| %>
 	<%= f.error_messages %>
 	<h2>Company fields</h2>
@@ -69,6 +89,8 @@ acts_as_working_days is a Rails plugin to add working days on models
 	  </tbody>
 	<table>
  <% end %>
+
+=== Creating I18n file to translate numeric week day to string
 	
  #config/locales/en.yml
  week_day:
@@ -80,6 +102,22 @@ acts_as_working_days is a Rails plugin to add working days on models
    day_5: Friday
    day_6: Saturday
   
+
+=== Setting rails application time zone
+
+Don't forget to set the time zone in your Rails application enviroment 
+
+ # config/enviroment.rb
+ Rails::Initializer.run do |config|
+   #...
+   config.time_zone = 'Brasilia'
+   #...
+ end
+
+To list all supported time zones 
+ $ rake time:zones:all
+
+(See http://wiki.rubyonrails.org/howtos/time-zones)
 
 == Installation
 
