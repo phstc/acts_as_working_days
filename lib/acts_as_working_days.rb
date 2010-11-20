@@ -8,6 +8,7 @@ module ActsAsWorkingDays
     def acts_as_working_days
       # adding relationship to self class
       has_many :working_days, :as => :workable
+      accepts_nested_attributes_for :working_days, :allow_destroy => true
       send :include, InstanceMethods
     end
   end
@@ -28,20 +29,29 @@ module ActsAsWorkingDays
       return !result.empty?
     end
     
-    def put_working_day(params = {:week_day => Time.now.wday, :start_hour => 0, :start_min => 0, :end_hour => 23, :end_min => 59})
-      working_day = nil
-      working_days.each do | wd |
-        if wd.week_day == params[:week_day]
-          working_day = wd
-          break
-        end
+    def working_days_defaults
+      defaults = []
+      7.times do | wday |
+        defaults << (working_days.find_by_week_day(wday, :order => 'week_day ASC') || WorkingDay.new(:week_day => wday))
       end
-      if working_day.nil?
-        working_days.build(params)
-      else
-        working_day.update_attributes(params)
-      end
+      return defaults
     end
+    
+    # def put_working_day(params = {:week_day => Time.now.wday, :start_hour => 0, :start_min => 0, :end_hour => 23, :end_min => 59})
+    #   working_day = nil
+    #   working_days.each do | wd |
+    #     if wd.week_day == params[:week_day]
+    #       working_day = wd
+    #       break
+    #     end
+    #   end
+    #   if working_day.nil?
+    #     working_days.build(params)
+    #   else
+    #     working_day.update_attributes(params)
+    #   end
+    # end
+    
   end
 end
 

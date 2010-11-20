@@ -4,10 +4,10 @@ class ActsAsWorkingDaysMigration < ActiveRecord::Migration
     create_table :working_days, :force => true do |t|
       #Date time columns
       t.integer :week_day
-      t.integer :start_hour
-      t.integer :start_min
-      t.integer :end_hour
-      t.integer :end_min
+      t.integer :start_hour, :default => 0
+      t.integer :start_min, :default => 0
+      t.integer :end_hour, :default => 23
+      t.integer :end_min, :default => 59
       #Polymorphic columns
       t.integer :workable_id
       t.string :workable_type
