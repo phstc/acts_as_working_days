@@ -4,33 +4,81 @@ acts_as_working_days is a Rails plugin to add working days on models
 
 == Usage
 
- class Company < ActiveRecord::Base
-  
-   acts_as_working_days
+	#app/models/company.rb
+	class Company < ActiveRecord::Base
 
- end
+		acts_as_working_days
+
+	end
  
- #Sample test code 
- def test_working_day
+	#Sample test code 
+	def test_working_day
 
-   kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
+		kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
 
-   #1 is Monday - Apu Kwik-E-Mart is only opened on Mondays, start 8h30, end 18h45
-   kwik_e_mart.put_working_day(:week_day => 1, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
+		#1 is Monday, Apu Kwik-E-Mart is only opened on Mondays, start 8h30, end 18h45
+		kwik_e_mart.working_days.build(:week_day => 1, :start_hour => 8, :start_min => 30, :end_hour => 18, :end_min => 45)
 
-   #Save model and working day
-   kwik_e_mart.save
+		#Save model and working day
+		kwik_e_mart.save
 
-   #0 is Sunday - 12h45 is closed 
-   assert_equal false, kwik_e_mart.working_day?(:week_day => 0, :hour => 12, :min => 0)
+		#0 is Sunday, 12h45 is closed 
+		assert_equal false, kwik_e_mart.working_day?(:week_day => 0, :hour => 12, :min => 0)
 
-   #1 is Monday - 21h00 is closed 
-   assert_equal false, kwik_e_mart.working_day?(:week_day => 1, :hour => 21)
+		#1 is Monday, 21h00 is closed 
+		assert_equal false, kwik_e_mart.working_day?(:week_day => 1, :hour => 21)
 
-   #1 is Monday - 12h15 is opened 
-   assert_equal true, kwik_e_mart.working_day?(:week_day => 1, :hour => 12, :min => 15)
+		#1 is Monday, 12h15 is opened 
+		assert_equal true, kwik_e_mart.working_day?(:week_day => 1, :hour => 12, :min => 15)
 
- end
+	end
+
+	#app/views/company/new.html.erb
+	<% form_for @company do |f| %>
+		<%= f.error_messages %>
+		<h2>Company fields</h2>
+		<p>
+			<%= f.label :name, 'Company name' %><br/>
+			<%= f.text_field :name %>
+		</p>
+		<h2>Workings days</h2>
+		<table id="table-working-days">
+			<thead>
+				<tr>
+					<th>Day</th>
+					<th>Open</th>
+					<th>Close</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% f.fields_for :working_days, @address.working_days_defaults do | working_day_form | %>
+					<tr>
+						<!-- I18n week_day.day_0...day_6, Sunday..Saturday -->
+						<td><%=  t "week_day.day_#{working_day_form.object.week_day}" %></td>
+						<td>
+							<%= working_day_form.hidden_field :week_day %>
+							<%= working_day_form.select :start_hour, 0..23, {}, {:class => 'select'}  %>
+							<%= working_day_form.select :start_min, 0..59, {}, {:class => 'select'}  %>
+						</td>
+						<td>
+							<%= working_day_form.select :end_hour, 0..23, {}, {:class => 'select'}  %>
+							<%= working_day_form.select :end_min, 0..59, {}, {:class => 'select'}  %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		<table>
+	<% end %>
+	
+	#config/locales/en.yml
+	week_day:
+	  day_0: Sunday
+	  day_1: Monday
+	  day_2: Tuesday
+	  day_3: Wednesday
+	  day_4: Thursday
+	  day_5: Friday
+	  day_6: Saturday
   
 
 == Installation
