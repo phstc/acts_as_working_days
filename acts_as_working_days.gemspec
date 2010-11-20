@@ -9,12 +9,13 @@ PKG_FILES = FileList[
   'lib/**/*',
   'rails/**/*',
   'tasks/**/*',
-  'test/**/*'
+  'test/**/*',
+  'app/**/*'
 ]
  
 spec = Gem::Specification.new do |s|
   s.name = "acts_as_working_days"
-  s.version = "0.0.4"
+  s.version = "0.0.6"
   s.author = "Pablo Cantero"
   s.email = "pablo@pablocantero.com"
   s.homepage = "https://github.com/phstc/acts_as_working_days"
