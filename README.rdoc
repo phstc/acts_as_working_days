@@ -129,6 +129,13 @@ Acts As Working Days On is tested to work in Rails 2.3.5
 
   script/plugin install git://github.com/phstc/acts_as_working_days
 
+==== Gem 
+ 
+To install the gem, add this to your config/environment.rb:
+
+  config.gem 'acts_as_working_days'
+
+
 ==== Post Installation
 
 1. script/generate acts_as_working_days_migration
