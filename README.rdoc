@@ -123,7 +123,7 @@ To list all supported time zones
 
 === Rails 2.3.x
 
-Acts As Working Days On is tested to work in Rails 2.3.5. 
+Acts As Working Days On is tested to work in Rails 2.3.5
 
 ==== Plugin
 
@@ -136,11 +136,17 @@ Acts As Working Days On is tested to work in Rails 2.3.5.
 
 === Rails 3.0
 
-Acts As Working Days On is tested to work in Rails 2.3.5. 
+Acts As Working Days On is tested to work in Rails 3
 
-To use it, add it to your Gemfile:
-  
-  gem 'acts_as_working_days'
+I tried to use with Rails 3 as gem and it doesn't worked (contributors are welcome)
+
+#To use it, add it to your Gemfile:
+#  
+#  gem 'acts_as_working_days'
+
+It works fine in Rails 3 using as plugin
+
+  script/plugin install git://github.com/phstc/acts_as_working_days
 
 ==== Post Installation
 
