@@ -51,42 +51,42 @@ week_day is an integer representing the day of the week, 0..6, with Sunday == 0
 
 === Creating html form to set the working days
 
-       # app/views/company/new.html.erb
-       <% form_for @company do |f| %>
-	<%= f.error_messages %>
-	<h2>Company fields</h2>
-	<p>
-		<%= f.label :name, 'Company name' %><br/>
-		<%= f.text_field :name %>
-	</p>
-	<h2>Workings days</h2>
-	<table id="table-working-days">
-	  <thead>
-	    <tr>
-		  <th>Day</th>
-		  <th>Open</th>
-		  <th>Close</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <% f.fields_for :working_days, @address.working_days_defaults do | working_day_form | %>
-		  <tr>
-		    <!-- I18n week_day.day_0...day_6, Sunday..Saturday -->
-		    <td><%=  t "week_day.day_#{working_day_form.object.week_day}" %></td>
-		    <td>
-			  <%= working_day_form.hidden_field :week_day %>
-			  <%= working_day_form.select :start_hour, 0..23, {}, {:class => 'select'}  %>
-			  <%= working_day_form.select :start_min, 0..59, {}, {:class => 'select'}  %>
-		    </td>
-	  	    <td>
-			  <%= working_day_form.select :end_hour, 0..23, {}, {:class => 'select'}  %>
-			  <%= working_day_form.select :end_min, 0..59, {}, {:class => 'select'}  %>
-		    </td>
-		  </tr>
-	    <% end %>
-	  </tbody>
-	<table>
-       <% end %>
+  # app/views/company/new.html.erb
+  <% form_for @company do |f| %>
+    <%= f.error_messages %>
+    <h2>Company fields</h2>
+    <p>
+      <%= f.label :name, 'Company name' %><br/>
+      <%= f.text_field :name %>
+    </p>
+    <h2>Workings days</h2>
+    <table id="table-working-days">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Open</th>
+          <th>Close</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% f.fields_for :working_days, @address.working_days_defaults do | working_day_form | %>
+        <tr>
+          <!-- I18n week_day.day_0...day_6, Sunday..Saturday -->
+          <td><%=  t "week_day.day_#{working_day_form.object.week_day}" %></td>
+          <td>
+            <%= working_day_form.hidden_field :week_day %>
+            <%= working_day_form.select :start_hour, 0..23, {}, {:class => 'select'}  %>
+            <%= working_day_form.select :start_min, 0..59, {}, {:class => 'select'}  %>
+          </td>
+          <td>
+            <%= working_day_form.select :end_hour, 0..23, {}, {:class => 'select'}  %>
+            <%= working_day_form.select :end_min, 0..59, {}, {:class => 'select'}  %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    <table>
+  <% end %>
 
 === Creating I18n file to translate numeric week day to string
 	
