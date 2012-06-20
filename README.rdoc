@@ -1,6 +1,6 @@
 = ActsAsWorkingDays
 
-acts_as_working_days is a Rails plugin to add working days on models
+acts_as_working_days is a Rails plugin to add working days to your models
 
 == Usage
 
@@ -8,12 +8,10 @@ acts_as_working_days is a Rails plugin to add working days on models
 
  # app/models/company.rb
  class Company < ActiveRecord::Base
- 
    acts_as_working_days
- 
  end
 
-=== Detecting working day
+=== Verifying a working day
 
  kwik_e_mart = Company.new(:name => 'Kwik-E-Mart')
  
@@ -53,8 +51,8 @@ week_day is an integer representing the day of the week, 0..6, with Sunday == 0
 
 === Creating html form to set the working days
 
- # app/views/company/new.html.erb
- <% form_for @company do |f| %>
+       # app/views/company/new.html.erb
+       <% form_for @company do |f| %>
 	<%= f.error_messages %>
 	<h2>Company fields</h2>
 	<p>
@@ -88,7 +86,7 @@ week_day is an integer representing the day of the week, 0..6, with Sunday == 0
 	    <% end %>
 	  </tbody>
 	<table>
- <% end %>
+       <% end %>
 
 === Creating I18n file to translate numeric week day to string
 	
@@ -123,16 +121,13 @@ To list all supported time zones
 
 === Rails 2.3.x
 
-Acts As Working Days On is tested to work in Rails 2.3.5
-
 ==== Plugin
 
   script/plugin install git://github.com/phstc/acts_as_working_days
 
 ==== Gem 
  
-To install the gem, add this to your config/environment.rb:
-
+  # config/environment.rb:
   config.gem 'acts_as_working_days'
 
 
@@ -143,15 +138,7 @@ To install the gem, add this to your config/environment.rb:
 
 === Rails 3.0
 
-Acts As Working Days On is tested to work in Rails 3
-
-I tried to use with Rails 3 as gem and it doesn't worked (contributors are welcome)
-
-#To use it, add it to your Gemfile:
-#  
-#  gem 'acts_as_working_days'
-
-It works fine in Rails 3 using as plugin
+==== Plugin
 
   script/plugin install git://github.com/phstc/acts_as_working_days
 
@@ -161,8 +148,6 @@ It works fine in Rails 3 using as plugin
 2. rake db:migrate
 
 == Testing
-
-Inside the plugin directory, you can run the tests with:
 
  rake test
 
