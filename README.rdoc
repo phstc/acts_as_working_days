@@ -24,8 +24,8 @@ acts_as_working_days is a Rails plugin to add working days to your models
  # Verifies if kwik_e_mart is opened on Mondays 21h30
  kwik_e_mart.working_day?(:week_day => 1, :hour => 21, :min => 30)
 
-week_day is an integer representing the day of the week, 0..6, with Sunday == 0
-(See http://www.ruby-doc.org/core/classes/Time.html#M000285)
+week_day is an integer representing the day of the week, 0..6, with Sunday == 0.
+(See http://www.ruby-doc.org/core-2.1.1/Time.html#method-i-wday)
 
 === Setting working days
 
